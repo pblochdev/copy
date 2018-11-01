@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class RegistrationController extends Controller
 {
-    
+
     /**
      * @Route("/registration", name="user_registration")
      */
@@ -21,20 +21,18 @@ class RegistrationController extends Controller
         $user = new User;
         $form = $this->createForm(UserType::class, $user);
         
-        
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
-            
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
-            
+
             $this->redirectToRoute('note');
         }
-        
+
         return $this->render('registration/index.html.twig', array(
             'form' => $form->createView()
         ));

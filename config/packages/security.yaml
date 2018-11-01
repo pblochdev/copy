@@ -12,9 +12,15 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            pattern:    ^/admin
-            http_basic: ~
+            anonymous: ~
             provider: our_db_provider
+            pattern: ^/
+            form_login:
+                login_path: login
+                check_path: login
+                default_target_path: /
+            logout:
+                path: app_logout
 
             # activate different ways to authenticate
 
@@ -27,6 +33,7 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/list, roles: ROLE_USER }
+         - { path: ^/note, roles: ROLE_USER }
         # - { path: ^/profile, roles: ROLE_USER }
        

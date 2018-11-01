@@ -8,7 +8,7 @@ use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="NoteRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\NoteRepository")
  */
 class Note
 {
@@ -30,14 +30,13 @@ class Note
     private $created_at;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="notes")
      */
-    private $user_id;
+    private $user;
     
     public function __construct() 
     {
         $this->created_at = new DateTime;
-        $this->user_id = -1;
     }
 
     public function getId()
@@ -69,14 +68,14 @@ class Note
         return $this;
     }
 
-    public function getUserId(): int
+    public function getUser(): ?User
     {
-        return $this->user_id;
+        return $this->user;
     }
 
-    public function setUserId(int $user_id): self
+    public function setUser(?User $user): self
     {
-        $this->user_id = $user_id;
+        $this->user = $user;
 
         return $this;
     }
