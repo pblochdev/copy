@@ -1,13 +1,18 @@
 {% extends "base.html.twig" %}
 {% block body %}
-	{% for note in notes %}
-		<div class="row mb-2">
-			<div class="col-10">
-				<input class="w-100" type="text" name="" id="" value="{{ note.text }}">
-			</div>
-			<div class="col-2">
-				{{ note.createdAt|date("H:i m-d-Y") }}
-			</div>
-		</div>
-	{% endfor %}
-{% endblock  %}
+    <div class="col-12">
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+        {% for note in notes %}
+            <div class="row mb-2">
+                <div class="col-10">
+                    <input class="w-100 form-control" type="text" name="" id="" value="{{ note.text }}">
+                </div>
+                <div class="col-2">
+                    {{ note.createdAt|date("H:i m-d-Y") }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

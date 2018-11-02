@@ -7,7 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
 class NoteType extends AbstractType
@@ -15,23 +15,18 @@ class NoteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('text', TextType::class, [
+            ->add('text', TextareaType::class, [
                 'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
-            ->add('created_at', DateTimeType::class, [
-                'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control',
+                    'placeholder' => 'Nowa notatka'
                 ]
             ])
             ->add('save', SubmitType::class, array(
                 'label' => 'Add Note',
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control',
                 ]
-            ))
-        ;
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -18,7 +18,7 @@ class NoteController extends Controller
         $note = new Note;
         $form = $this->createForm(NoteType::class, $note);
         $form->handleRequest($request);
-        var_dump($this->getUser()->getId());
+
         if ($form->isSubmitted() && $form->isValid()) {
             $note = $form->getData();
             $note->setUser($this->getUser());
@@ -26,9 +26,6 @@ class NoteController extends Controller
             $em->persist($note);
             $em->flush();
             $this->addFlash('success', 'Task created!');
-        }
-        else {
-            $this->addFlash('error', 'Not valid!');
         }
 
         return $this->render('note/index.html.twig', array(
@@ -38,18 +35,34 @@ class NoteController extends Controller
 
 
     /**
-     * @Route("/list", name="list")
+     * @Route("/", name="list")
      */
-    public function list()
+    public function list(Request $request)
     {
+        $note = new Note;
+        $form = $this->createForm(NoteType::class, $note);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $note = $form->getData();
+            $note->setUser($this->getUser());
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($note);
+            $em->flush();
+            $this->addFlash('success', 'Task created!');
+        }
+
         $repository = $this->getDoctrine()->getRepository(Note::class);
 
         $notes = $repository->findBy([
             'user' => $this->getUser()->getId()
+        ], [
+            'id' => 'DESC'
         ]);
-            
+
         return $this->render('note/list.html.twig', array(
-            'notes' => $notes
+            'notes' => $notes,
+            'form' => $form->createView()
         ));
     }
 }
