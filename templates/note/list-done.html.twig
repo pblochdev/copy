@@ -1,0 +1,16 @@
+{% extends "base.html.twig" %}
+{% block body %}
+	<div class="col-12">
+		<h1>Done notes</h1>
+        {% for note in notes %}
+            <div class="row mb-2">
+                <div class="col-12 col-md-10">
+                    <input class="w-100 form-control" type="text" name="" id="" value="{{ note.text }}">
+                </div>
+                <div class="col-12 col-md-2">
+                    {{ note.doneAt|date("H:i m-d-Y") }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

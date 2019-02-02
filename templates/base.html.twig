@@ -19,6 +19,15 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('list') }}">Notes list</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('list_done') }}">Done notes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('add_counter') }}">Add counter</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('counter_list') }}">Counter list</a>
+                </li>
             </ul>
             <ul class="nav float-right">
                 {% if app.user %}

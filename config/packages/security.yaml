@@ -35,5 +35,12 @@ security:
     access_control:
          - { path: ^/$, roles: ROLE_USER }
          - { path: ^/note, roles: ROLE_USER }
-        # - { path: ^/profile, roles: ROLE_USER }
+         - { path: ^/profile, roles: ROLE_USER }
+         - { path: ^/add-counter, roles: ROLE_USER }
+         - { path: ^/counter-list, roles: ROLE_USER }
+         - { path: ^/counter-details, roles: ROLE_USER }
+         - { path: ^/add-history, roles: ROLE_USER }
+         - { path: ^/note-remove, roles: ROLE_USER }
+         - { path: ^/note-done, roles: ROLE_USER }
+         - { path: ^/list-done, roles: ROLE_USER }
        

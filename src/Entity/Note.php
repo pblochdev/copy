@@ -33,9 +33,20 @@ class Note
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="notes")
      */
     private $user;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $status;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $done_at;
     
     public function __construct() 
     {
+        $this->status = 1;
         $this->created_at = new DateTime;
     }
 
@@ -68,6 +79,18 @@ class Note
         return $this;
     }
 
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
     public function getUser(): ?User
     {
         return $this->user;
@@ -76,6 +99,18 @@ class Note
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getDoneAt(): ?DateTimeInterface
+    {
+        return $this->done_at;
+    }
+
+    public function setDoneAt(DateTimeInterface $done_at): self
+    {
+        $this->done_at = $done_at;
 
         return $this;
     }

@@ -12,3 +12,5 @@
 /nbproject/private/
 ### sessions ###
 /src/sessions/
+### VSCODE files ###
+/.vscode

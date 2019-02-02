@@ -30,7 +30,7 @@ class RegistrationController extends Controller
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->redirectToRoute('note');
+            $this->redirectToRoute('list');
         }
 
         return $this->render('registration/index.html.twig', array(

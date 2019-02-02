@@ -27,7 +27,7 @@ class User implements UserInterface, Serializable
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, unique=true)
+     * @ORM\Column(type="string", length=191, unique=true)
      */
     private $username;
 
@@ -37,7 +37,7 @@ class User implements UserInterface, Serializable
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=255, unique=true)
+     * @ORM\Column(type="string", length=191, unique=true)
      * @Assert\NotBlank()
      * @Assert\Email()
      */
@@ -64,10 +64,16 @@ class User implements UserInterface, Serializable
      */
     private $notes;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Counter", mappedBy="user")
+     */
+    private $counters;
+
     public function __construct() 
     {
         $this->status = 1;
         $this->notes = new ArrayCollection();
+        $this->counters = new ArrayCollection();
     }
 
 
@@ -201,6 +207,37 @@ class User implements UserInterface, Serializable
             // set the owning side to null (unless already changed)
             if ($note->getUser() === $this) {
                 $note->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Counter[]
+     */
+    public function getCounters(): Collection
+    {
+        return $this->counters;
+    }
+
+    public function addCounter(Counter $counter): self
+    {
+        if (!$this->counters->contains($counter)) {
+            $this->counters[] = $counter;
+            $counter->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCounter(Counter $counter): self
+    {
+        if ($this->counters->contains($counter)) {
+            $this->counters->removeElement($counter);
+            // set the owning side to null (unless already changed)
+            if ($counter->getUserId() === $this) {
+                $counter->setUserId(null);
             }
         }
 

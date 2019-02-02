@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    <div class="col-12">
+        <h1>Counters list</h1>
+        {% for counter in counters %}
+            <div class="row col-12 mb-2">
+                <div class="col-12 col-md-4">
+                  {{ counter.name }}
+                </div>
+                <div class="col-12 col-md-2">
+                    {{ counter.counterHistories|length }} / {{ counter.startCounter }}
+                </div>
+                <div class="col-6 col-md-2">
+                    <a class="btn btn-primary"href="{{ path('add_counter_history', { 'counterId' : counter.id }) }}">+</a>
+                </div>
+                <div class="col-6 col-md-2">
+                    {{ counter.createdAt|date("H:i m-d-Y") }}
+				</div>
+				<div class="col-6 col-md-2">
+					<a href="{{ path('counter_details', { 'counterId': counter.id }) }}">Szczegóły</a>
+				</div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
