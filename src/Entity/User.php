@@ -69,11 +69,17 @@ class User implements UserInterface, Serializable
      */
     private $counters;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Workout", mappedBy="user")
+     */
+    private $workouts;
+
     public function __construct() 
     {
         $this->status = 1;
         $this->notes = new ArrayCollection();
         $this->counters = new ArrayCollection();
+        $this->workouts = new ArrayCollection();
     }
 
 
@@ -238,6 +244,37 @@ class User implements UserInterface, Serializable
             // set the owning side to null (unless already changed)
             if ($counter->getUserId() === $this) {
                 $counter->setUserId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Workout[]
+     */
+    public function getWorkouts(): Collection
+    {
+        return $this->workouts;
+    }
+
+    public function addWorkout(Workout $workout): self
+    {
+        if (!$this->workouts->contains($workout)) {
+            $this->workouts[] = $workout;
+            $workout->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWorkout(Workout $workout): self
+    {
+        if ($this->workouts->contains($workout)) {
+            $this->workouts->removeElement($workout);
+            // set the owning side to null (unless already changed)
+            if ($workout->getUser() === $this) {
+                $workout->setUser(null);
             }
         }
 
