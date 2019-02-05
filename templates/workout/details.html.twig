@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>{{ workout.createdAt|date('Y-m-d') }}</h2>
+
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    <div class="row">
+        <div class="col-6">
+            {{ form_widget(form.name) }}
+        </div>
+        <div class="col-2">
+            {{ form_widget(form.repetition) }}
+        </div>
+        <div class="col-2">
+            {{ form_widget(form.weight) }}
+        </div>  
+        <div class="col-2">
+                {{ form_widget(form.submit) }}
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+    {% for excercise in workout.excercises %}
+        <div class="row">
+            <div class="col-6">
+                {{ excercise.name }}
+            </div>
+            <div class="col-3">
+                {{ excercise.repetition }}
+            </div>
+            <div class="col-3">
+                {{ excercise.weight }}
+            </div>   
+        </div>
+    {% endfor %}
+{% endblock %}

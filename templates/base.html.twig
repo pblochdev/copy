@@ -28,6 +28,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('counter_list') }}">Counter list</a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ path('add_workout') }}" class="nav-link">Add workout</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('workout_list') }}" class="nav-link">Workout list</a>
+                </li>
             </ul>
             <ul class="nav float-right">
                 {% if app.user %}

@@ -42,6 +42,8 @@ class Workout
     public function __construct()
     {
         $this->excercises = new ArrayCollection();
+        $this->created_at = new \DateTime();
+        $this->status = 1;
     }
 
     

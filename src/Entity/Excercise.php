@@ -42,6 +42,16 @@ class Excercise
      */
     private $orderOfExcercise;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $weight;
+
+    public function __construct()
+    {
+        $this->status = 1;
+    }
+
     public function getId()
     {
         return $this->id;
@@ -103,6 +113,18 @@ class Excercise
     public function setOrderOfExcercise(?int $orderOfExcercise): self
     {
         $this->orderOfExcercise = $orderOfExcercise;
+
+        return $this;
+    }
+
+    public function getWeight(): ?float
+    {
+        return $this->weight;
+    }
+
+    public function setWeight(?float $weight): self
+    {
+        $this->weight = $weight;
 
         return $this;
     }

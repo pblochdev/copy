@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    <div class="col-12">
+        
+        <h1>Workout list</h1>
+        {% for workout in workouts %}
+            <div class="row col-12">
+                <a href="{{ path('workout_details', { workoutId: workout.id }) }}">{{ workout.createdAt|date('Y-m-d') }}</a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
