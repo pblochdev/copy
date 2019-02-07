@@ -7,52 +7,62 @@
         </title>
         <meta name="viewport" content="user-scalable=0, initial-scale=1.0">
         {% block stylesheets %}
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
             <link rel="stylesheet" href="{{ asset('../assets/css/main.css') }}">
         {% endblock %}
     </head>
     <body>
+       <!--Navbar-->
+        <nav class="navbar navbar-light light-blue lighten-4">
+            <a class="navbar-brand" href="/">Home</a>
+            <button class="navbar-toggler toggler-example glyphicon glyphicon-menu-hamburger" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1"
+                aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="dark-blue-text"><i class="fas fa-bars fa-1x"></i></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent1">
+                <ul class="navbar-nav mr-auto">
+                    {% if app.user %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('add_note') }}">Add note</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('list') }}">Notes list</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('list_done') }}">Done notes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('add_counter') }}">Add counter</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('counter_list') }}">Counter list</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ path('add_workout') }}" class="nav-link">Add workout</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ path('workout_list') }}" class="nav-link">Workout list</a>
+                        </li>
+                        <li class="nav-item nav-link">
+                            Hello {{ app.user.username }}
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('login') }}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('user_registration') }}">Register</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav> 
+
         <div class="container">
-            <ul class="nav float-left">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('add_note') }}">Add note</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('list') }}">Notes list</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('list_done') }}">Done notes</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('add_counter') }}">Add counter</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('counter_list') }}">Counter list</a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ path('add_workout') }}" class="nav-link">Add workout</a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ path('workout_list') }}" class="nav-link">Workout list</a>
-                </li>
-            </ul>
-            <ul class="nav float-right">
-                {% if app.user %}
-                    <li class="nav-item nav-link">
-                        Hello {{ app.user.username }}
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('login') }}">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('user_registration') }}">Register</a>
-                    </li>
-                {% endif %}
-            </ul>
             <div class="clearfix"></div>
             {% block body %}{% endblock %}
         </div>

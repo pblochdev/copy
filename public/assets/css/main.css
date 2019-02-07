@@ -2,3 +2,23 @@
 body {
 	background-color: #dedede;
 }
+
+@media (min-width: 768px) {
+	nav .navbar-nav {
+		flex-direction: row;
+		justify-content: space-between;
+	}
+
+	nav .collapse {
+		display: block;
+		flex-basis: auto;
+	}
+		
+	nav .navbar-toggler {
+		display: none;
+	}
+
+	nav .navbar-light .navbar-nav .nav-link {
+		color: rgba(0,0,0,.8); 
+	}
+}
