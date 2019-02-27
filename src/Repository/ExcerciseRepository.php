@@ -19,22 +19,10 @@ class ExcerciseRepository extends ServiceEntityRepository
         parent::__construct($registry, Excercise::class);
     }
 
-//    /**
-//     * @return Excercise[] Returns an array of Excercise objects
-//     */
-    /*
-    public function findByExampleField($value)
+    public function findAll()
     {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('e.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        return $this->findBy(array('status' => 1));
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Excercise

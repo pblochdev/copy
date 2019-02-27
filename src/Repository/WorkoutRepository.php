@@ -47,4 +47,10 @@ class WorkoutRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    // public function findByUser($value): ?Workout
+    // {
+    //     return $this->createQueryBuilder('w')
+    //         ->
+    // }
 }

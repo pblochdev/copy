@@ -121,7 +121,7 @@ class NoteController extends Controller
 
         if (!$note) {
             throw $this->createNotFoundException(
-                'Note not found '.$id
+                'Note not found '. $noteId
             );
         }
         

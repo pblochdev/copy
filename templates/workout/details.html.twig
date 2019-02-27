@@ -20,17 +20,20 @@
     </div>
     {{ form_end(form) }}
 
-    {% for excercise in workout.excercises %}
-        <div class="row">
-            <div class="col-6">
+    {% for excercise in excercises %}
+        <div class="row excercise">
+            <div class="col-12 col-md-6 font-weight-bold">
                 {{ excercise.name }}
             </div>
-            <div class="col-3">
+            <div class="col-4 col-md-2">
                 {{ excercise.repetition }}
             </div>
-            <div class="col-3">
+            <div class="col-4 col-md-2">
                 {{ excercise.weight }}
-            </div>   
+            </div>  
+            <div class="col-4 col-md-2 ">
+                <a class="btn btn-primary" href="{{ path('excercise_remove', { 'excerciseId': excercise.id }) }}">Remove</a>
+            </div> 
         </div>
     {% endfor %}
 {% endblock %}

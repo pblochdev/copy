@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Entity\Workout;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\ExcerciseType;
+use App\Entity\Excercise;
 
 class WorkoutController extends Controller
 {
@@ -43,7 +44,8 @@ class WorkoutController extends Controller
     {
         $repository = $this->getDoctrine()->getRepository(Workout::class);
         $workouts = $repository->findBy([
-            'user' => $this->getUser()
+            'user' => $this->getUser(),
+            'status' => 1
         ]);
 
         return $this->render('workout/list.html.twig', [
@@ -56,9 +58,20 @@ class WorkoutController extends Controller
      */
     public function details($workoutId, Request $request)
     {
-        $repository = $this->getDoctrine()->getRepository(Workout::class);
-        $workout = $repository->findOneBy([
-            'id' => $workoutId
+        $workoutRepository = $this->getDoctrine()->getRepository(Workout::class);
+        $workout = $workoutRepository->findOneBy([
+            'id' => $workoutId,
+            // 'excercise_id' => 1
+        ]);
+        if (!$workout) {
+            throw new \Exception("Workout not found");
+        }
+
+        $excercieRepository = $this->getDoctrine()->getRepository(Excercise::class);
+
+        $excercises = $excercieRepository->findBy([
+            'status' => 1,
+            'workout' => $workoutId
         ]);
 
         $form = $this->createForm(ExcerciseType::class);
@@ -76,8 +89,35 @@ class WorkoutController extends Controller
 
         return $this->render('workout/details.html.twig', [
             'workout' => $workout,
+            'excercises' => $excercises,
             'form' => $form->createView()
         ]);
+    }
+
+
+    /**
+     * @Route("/workout-remove/{workoutId}", name="workout_remove")
+     */
+    public function remove($workoutId)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $workoutRrepository = $entityManager->getRepository(Workout::class);
+        $workout = $workoutRrepository->findOneBy([
+            'user' => $this->getUser(),
+            'id' => $workoutId
+        ]);
+
+        if (!$workout) {
+            throw $this->createNotFoundException(
+                'Workout not found ' . $workoutId
+            );
+        }
+
+        $workout->setStatus(0);
+        $entityManager->persist($workout);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('workout_list');
     }
 
 }
