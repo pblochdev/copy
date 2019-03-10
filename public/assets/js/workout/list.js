@@ -9,7 +9,6 @@ class WorkoutList extends React.Component {
 	}
   
 	fetchResult = () => {
-	  console.log('fetchItemss');
 	  
 	  fetch("/workout-list-json")
 		.then(res => res.json())
@@ -33,6 +32,16 @@ class WorkoutList extends React.Component {
 		  }
 		)
 	}
+
+
+	delete = (url) => {
+		axios.get(url)
+			.then(res => {
+				console.log(res.data);
+				this.fetchResult();
+			})
+			.catch(err => console.log(err))
+	}
   
 	render() {
 	  const { error, isLoaded, items } = this.state;
@@ -45,12 +54,12 @@ class WorkoutList extends React.Component {
 		return (
 			<div>
 				{items.map(item => (
-				  <div class="workout row">
-					<div class="col-10">
+				  <div className="workout row">
+					<div className="col-10">
 					  <a href={item.details_url}>{item.created_at}</a>
 					</div>
-					<div class="col-2">
-					  <a class="btn btn-danger" href={item.remove_url}>Remove</a>
+					<div className="col-2">
+						<button onClick={() => this.delete(item.remove_url)} className="btn btn-danger">Remove</button>
 					</div>
 				  </div>
 				))}
@@ -61,7 +70,7 @@ class WorkoutList extends React.Component {
   
 	componentDidMount() {
 	  this.fetchResult()
-	  setInterval(this.fetchResult, 10000);
+	  setInterval(this.fetchResult, 60000);
 	}
   }
   

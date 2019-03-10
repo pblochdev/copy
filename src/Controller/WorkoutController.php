@@ -70,7 +70,7 @@ class WorkoutController extends Controller
         $workouts = array_map(function($object) {
             return $object->toArray();
         }, $workouts);
-        
+
         $workouts = $formater->format($workouts);
 
         $response = new JsonResponse($workouts);
@@ -141,7 +141,11 @@ class WorkoutController extends Controller
         $entityManager->persist($workout);
         $entityManager->flush();
 
-        return $this->redirectToRoute('workout_list');
+        $response = new JsonResponse([
+            'result' => 'success'
+        ]);
+        
+        return $response;
     }
 
 }
