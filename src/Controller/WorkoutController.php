@@ -8,6 +8,8 @@ use App\Entity\Workout;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\ExcerciseType;
 use App\Entity\Excercise;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Formater\WorkoutList;
 
 class WorkoutController extends Controller
 {
@@ -51,6 +53,28 @@ class WorkoutController extends Controller
         return $this->render('workout/list.html.twig', [
             'workouts' => $workouts
         ]);
+    }
+
+    /**
+     * @Route("/workout-list-json", name="workout_list_json")
+     */
+    public function listJson(WorkoutList $formater)
+    {
+        $repository = $this->getDoctrine()->getRepository(Workout::class);
+        $workouts = $repository->findBy([
+            'user' => $this->getUser(),
+            'status' => 1
+        ]);
+            
+        
+        $workouts = array_map(function($object) {
+            return $object->toArray();
+        }, $workouts);
+        
+        $workouts = $formater->format($workouts);
+
+        $response = new JsonResponse($workouts);
+        return $response;
     }
 
     /**

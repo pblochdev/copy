@@ -118,4 +118,13 @@ class Workout
 
         return $this;
     }
+
+
+    public function toArray()
+    {
+        return [
+            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+            'id' => $this->id
+        ];
+    }
 }

@@ -1,17 +1,14 @@
 {% extends "base.html.twig" %}
 {% block body %}
-    <div class="col-12">
-        
-        <h1>Workout list</h1>
-        {% for workout in workouts %}
-            <div class="workout row">
-                <div class="col-10">
-                    <a href="{{ path('workout_details', { workoutId: workout.id }) }}">{{ workout.createdAt|date('Y-m-d') }}</a>
-                </div>
-                <div class="col-2">
-                    <a class="btn btn-danger" href="{{ path('workout_remove', { workoutId: workout.id }) }}">Remove</a>
-                </div>
-            </div>
-        {% endfor %}
+    <h1>Workout list</h1>
+    <div id="workout_list" class="col-12">
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/babel" src="{{ asset('../assets/js/workout/list.js') }}"></script>
+    <script type="text/babel">
+        ReactDOM.render(<WorkoutList />, document.getElementById('react-test'));
+    </script>
 {% endblock %}
