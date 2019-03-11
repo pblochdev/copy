@@ -5,6 +5,9 @@ namespace App\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Entity\Excercise;
+use App\Entity\Workout;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Formater\ExcerciseList;
 
 class ExcerciseController extends Controller
 {
@@ -40,8 +43,41 @@ class ExcerciseController extends Controller
         $entityManager->persist($excercise);
         $entityManager->flush();
 
-        return $this->redirectToRoute('workout_details', [
-            'workoutId' => $excercise->getWorkout()->getId()
+        $response = new JsonResponse([
+            'result' => 'success'
         ]);
+        
+        return $response;
+    }
+
+    /**
+     * @Route("/workout-details/{workoutId}", name="api_workout_details")
+     */
+    public function getExcercises($workoutId, ExcerciseList $formatter)
+    {
+        $workoutRepository = $this->getDoctrine()->getRepository(Workout::class);
+        $workout = $workoutRepository->findOneBy([
+            'id' => $workoutId,
+            'user' => $this->getUser()
+        ]);
+        if (!$workout) {
+            throw new \Exception("Workout not found");
+        }
+
+        $excercieRepository = $this->getDoctrine()->getRepository(Excercise::class);
+
+        $excercises = $excercieRepository->findBy([
+            'status' => 1,
+            'workout' => $workoutId
+        ]);
+
+        $excercises = array_map(function($object) {
+            return $object->toArray();
+        }, $excercises);
+        $excercises = $formatter->format($excercises);
+
+        $response = new JsonResponse($excercises);
+
+        return $response;
     }
 }

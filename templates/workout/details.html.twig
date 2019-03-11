@@ -20,20 +20,13 @@
     </div>
     {{ form_end(form) }}
 
-    {% for excercise in excercises %}
-        <div class="row excercise">
-            <div class="col-12 col-md-6 font-weight-bold">
-                {{ excercise.name }}
-            </div>
-            <div class="col-4 col-md-2">
-                {{ excercise.repetition }}
-            </div>
-            <div class="col-4 col-md-2">
-                {{ excercise.weight }}
-            </div>  
-            <div class="col-4 col-md-2 ">
-                <a class="btn btn-primary" href="{{ path('excercise_remove', { 'excerciseId': excercise.id }) }}">Remove</a>
-            </div> 
-        </div>
-    {% endfor %}
+    <div id="workout_details"></div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/babel" src="{{ asset('../assets/js/workout/details.js') }}"></script>
+    <script type="text/babel">
+        ReactDOM.render(<WorkoutDetails workout_id="{{ workout.id }}" />, document.getElementById('workout_details'));
+    </script>
 {% endblock %}

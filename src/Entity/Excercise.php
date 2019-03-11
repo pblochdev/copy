@@ -128,4 +128,15 @@ class Excercise
 
         return $this;
     }
+
+
+    public function toArray()
+    {
+        return [
+            'weight' => $this->weight,
+            'id' => $this->id,
+            'name' => $this->name,
+            'repetition' => $this->repetition
+        ];
+    }
 }

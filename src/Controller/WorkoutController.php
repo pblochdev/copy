@@ -91,13 +91,6 @@ class WorkoutController extends Controller
             throw new \Exception("Workout not found");
         }
 
-        $excercieRepository = $this->getDoctrine()->getRepository(Excercise::class);
-
-        $excercises = $excercieRepository->findBy([
-            'status' => 1,
-            'workout' => $workoutId
-        ]);
-
         $form = $this->createForm(ExcerciseType::class);
         $form->handleRequest($request);
         
@@ -113,7 +106,6 @@ class WorkoutController extends Controller
 
         return $this->render('workout/details.html.twig', [
             'workout' => $workout,
-            'excercises' => $excercises,
             'form' => $form->createView()
         ]);
     }
