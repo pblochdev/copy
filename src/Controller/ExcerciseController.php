@@ -8,6 +8,9 @@ use App\Entity\Excercise;
 use App\Entity\Workout;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Formater\ExcerciseList;
+use Symfony\Component\HttpFoundation\Request;
+use App\Form\ExcerciseType;
+use App\Services\FormErrors;
 
 class ExcerciseController extends Controller
 {
@@ -47,6 +50,42 @@ class ExcerciseController extends Controller
             'result' => 'success'
         ]);
         
+        return $response;
+    }
+
+    /**
+     * @Route("/add-excercise", name="add_excercise")
+     */
+    public function addExcercise(Request $request, FormErrors $formErrors)
+    {
+        $form = $this->createForm(ExcerciseType::class);
+        $form->handleRequest($request);
+        $requestParams = $request->request->all();
+        
+        if ($form->isValid() && isset($requestParams['workoutId'])) { 
+            $excercise = $form->getData();
+            $workoutRepository = $this->getDoctrine()->getRepository(Workout::class);
+            $workout = $workoutRepository->findOneBy([
+                'id' => $requestParams['workoutId'],
+            ]);
+            if (!$workout) {
+                throw new \Exception("Workout not found");
+            }
+            $excercise->setWorkout($workout);
+            $excercise->setOrderOfExcercise(count($workout->getExcercises()));
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($excercise);
+            $em->flush();
+            $response = new JsonResponse([
+                'result' => 'success'
+            ]);
+        } else {
+            $response = new JsonResponse([
+                'result' => 'invalid',
+                'errors' => $formErrors->getJson($form)
+            ]);
+        }
+
         return $response;
     }
 

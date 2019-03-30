@@ -10,6 +10,8 @@ use App\Form\ExcerciseType;
 use App\Entity\Excercise;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Formater\WorkoutList;
+use App\Services\FormErrors;
+use App\Services\FormJson;
 
 class WorkoutController extends Controller
 {
@@ -80,33 +82,19 @@ class WorkoutController extends Controller
     /**
      * @Route("/workout/{workoutId}", name="workout_details")
      */
-    public function details($workoutId, Request $request)
+    public function details($workoutId, Request $request, FormErrors $formErrors, FormJson $formJson)
     {
         $workoutRepository = $this->getDoctrine()->getRepository(Workout::class);
         $workout = $workoutRepository->findOneBy([
             'id' => $workoutId,
-            // 'excercise_id' => 1
+            'user' => $this->getUser()
         ]);
         if (!$workout) {
             throw new \Exception("Workout not found");
         }
-
-        $form = $this->createForm(ExcerciseType::class);
-        $form->handleRequest($request);
         
-        if ($form->isSubmitted() && $form->isValid()) { 
-            $excercise = $form->getData();
-            $excercise->setWorkout($workout);
-            $excercise->setOrderOfExcercise(count($workout->getExcercises()));
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($excercise);
-            $em->flush();
-            return $this->redirect($request->getUri());
-        }
-
         return $this->render('workout/details.html.twig', [
             'workout' => $workout,
-            'form' => $form->createView()
         ]);
     }
 

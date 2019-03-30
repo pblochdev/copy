@@ -17,16 +17,20 @@ class ExcerciseType extends AbstractType
         $builder
             ->add('repetition', NumberType::class, [
                 'attr' => [
+                    'type' => 'text',
                     'placeholder' => 'Repetition'
                 ]
             ])
             ->add('name', TextType::class, [
+                'required' => true,
                 'attr' => [
+                    'type' => 'text',
                     'placeholder' => 'Name'
                 ]
             ])
             ->add('weight', NumberType::class, [
                 'attr' => [
+                    'type' => 'text',
                     'placeholder' => 'Weight'
                 ]
             ])
@@ -38,6 +42,18 @@ class ExcerciseType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Excercise::class,
+            'csrf_protection' => false,
         ]);
+    }
+
+
+    public function getJsonErrors()
+    {
+        $errors = $this->getErrors(true, false);
+
+        if (!empty($errors)) {
+            dump($errors);
+        }
+        exit;
     }
 }

@@ -2,31 +2,17 @@
 
 {% block body %}
     <h2>{{ workout.createdAt|date('Y-m-d') }}</h2>
-
-    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-    <div class="row">
-        <div class="col-12 col-md-6">
-            {{ form_widget(form.name) }}
-        </div>
-        <div class="col-4 col-md-2">
-            {{ form_widget(form.repetition) }}
-        </div>
-        <div class="col-4 col-md-2">
-            {{ form_widget(form.weight) }}
-        </div>  
-        <div class="col-4 col-md-2">
-                {{ form_widget(form.submit) }}
-        </div>
-    </div>
-    {{ form_end(form) }}
-
+    <div id="excercise_form"></div>
     <div id="workout_details"></div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     <script type="text/babel" src="{{ asset('../assets/js/workout/details.js') }}"></script>
+    <script type="text/babel" src="{{ asset('../assets/js/component/input.js') }}"></script>
+    <script type="text/babel" src="{{ asset('../assets/js/excercise/add_form.js') }}"></script>
     <script type="text/babel">
-        ReactDOM.render(<WorkoutDetails workout_id="{{ workout.id }}" />, document.getElementById('workout_details'));
+        let excercie_list = ReactDOM.render(<WorkoutDetails workout_id="{{ workout.id }}" />, document.getElementById('workout_details'));
+        ReactDOM.render(<AddExcerciseForm excercise_list={excercie_list} workout_id="{{ workout.id }}" />, document.getElementById('excercise_form'));
     </script>
 {% endblock %}
