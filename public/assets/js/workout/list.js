@@ -55,10 +55,10 @@ class WorkoutList extends React.Component {
 			<div>
 				{items.map(item => (
 				  <div className="workout row">
-					<div className="col-10">
-					  <a href={item.details_url}>{item.created_at}</a>
+					<div className="col-7 col-md-9">
+					  <a href={item.details_url}>{item.date}</a>
 					</div>
-					<div className="col-2">
+					<div className="col-5 col-md-3">
 						<button onClick={() => this.delete(item.remove_url)} className="btn btn-danger">Remove</button>
 					</div>
 				  </div>
