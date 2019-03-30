@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Formater\WorkoutList;
 use App\Services\FormErrors;
 use App\Services\FormJson;
+use App\Services\Workout as AppWorkout;
 
 class WorkoutController extends Controller
 {
@@ -28,15 +29,20 @@ class WorkoutController extends Controller
     /**
      * @Route("/add-workout", name="add_workout")
      */
-    public function add()
+    public function add(AppWorkout $workoutService)
     {
-        $user = $this->getUser();
-
-        $workout = new Workout();
-        $workout->setUser($user);
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($workout);
-        $em->flush();
+        // $this->getDoctrine()->getConnection()->getConfiguration()->setSQLLogger(new \Doctrine\DBAL\Logging\EchoSQLLogger());
+        if ($workoutService->checkCanAdd()) {
+            $user = $this->getUser();
+    
+            $workout = new Workout();
+            $workout->setUser($user);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($workout);
+            $em->flush();
+        } else {
+            $workout = $workoutService->getWorkout();
+        }
 
         return $this->redirectToRoute('workout_details', ['workoutId' => $workout->getId()]);
     }

@@ -39,10 +39,16 @@ class Workout
      */
     private $excercises;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $date;
+
     public function __construct()
     {
         $this->excercises = new ArrayCollection();
         $this->created_at = new \DateTime();
+        $this->date = new \DateTime();
         $this->status = 1;
     }
 
@@ -123,8 +129,20 @@ class Workout
     public function toArray()
     {
         return [
-            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+            'date' => $this->created_at->format('Y-m-d H:i:s'),
             'id' => $this->id
         ];
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
+
+        return $this;
     }
 }

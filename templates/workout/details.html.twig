@@ -2,6 +2,9 @@
 
 {% block body %}
     <h2>{{ workout.createdAt|date('Y-m-d') }}</h2>
+    <h2>
+        <div id="workout_date"></div>
+    </h2>
     <div id="excercise_form"></div>
     <div id="workout_details"></div>
 {% endblock %}
@@ -15,4 +18,5 @@
         let excercie_list = ReactDOM.render(<WorkoutDetails workout_id="{{ workout.id }}" />, document.getElementById('workout_details'));
         ReactDOM.render(<AddExcerciseForm excercise_list={excercie_list} workout_id="{{ workout.id }}" />, document.getElementById('excercise_form'));
     </script>
+    
 {% endblock %}

@@ -10,7 +10,7 @@ class AddExcerciseForm extends React.Component {
 					'type': 'text',
 					'id': 'excercise_name',
 					'name': 'excercise[name]',
-					'outerClass': 'col-12 col-md-6',
+					'outerClass': 'col-12 col-md-6 form-element',
 					'attrs': {
 						'className': 'form-control',
 						'placeholder': 'Name'
@@ -20,7 +20,7 @@ class AddExcerciseForm extends React.Component {
 					'type': 'text',
 					'id': 'excercise_repetition',
 					'name': 'excercise[repetition]',
-					'outerClass': 'col-4 col-md-2',
+					'outerClass': 'col-4 col-md-2 form-element',
 					'attrs': {
 						'className': 'form-control',
 						'placeholder': 'Repetition'
@@ -30,7 +30,7 @@ class AddExcerciseForm extends React.Component {
 					'type': 'text',
 					'id': 'excercise_weight',
 					'name': 'excercise[weight]',
-					'outerClass': 'col-4 col-md-2',
+					'outerClass': 'col-4 col-md-2 form-element',
 					'attrs': {
 						'className': 'form-control',
 						'placeholder': 'Weight'
@@ -40,7 +40,7 @@ class AddExcerciseForm extends React.Component {
 					'type': 'submit',
 					'id': 'excercise_submit',
 					'name': 'excercise[submit]',
-					'outerClass': 'col-4 col-md-2',
+					'outerClass': 'col-4 col-md-2 form-element',
 					'attrs': {
 						'className': 'btn-secondary btn'
 					}
@@ -61,7 +61,6 @@ class AddExcerciseForm extends React.Component {
 		}
 
 		formValues.append('workoutId', this.props.workout_id);
-		console.log('formData.values()', formData.values());
 		
 		axios.post('/add-excercise', formValues)
 		.then(

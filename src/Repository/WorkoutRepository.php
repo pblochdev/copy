@@ -53,4 +53,21 @@ class WorkoutRepository extends ServiceEntityRepository
     //     return $this->createQueryBuilder('w')
     //         ->
     // }
+
+    public function getTodayWorkouts()
+    {
+        $date = new \DAteTime();
+        $from = new \DateTime($date->format("Y-m-d")." 00:00:00");
+        $to   = new \DateTime($date->format("Y-m-d")." 23:59:59");
+
+        $qb = $this->createQueryBuilder("e");
+        $qb
+            ->andWhere('e.date BETWEEN :from AND :to')
+            ->setParameter('from', $from )
+            ->setParameter('to', $to)
+        ;
+        $result = $qb->getQuery()->getResult();
+
+        return reset($result);
+    }
 }
