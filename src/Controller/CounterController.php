@@ -31,7 +31,7 @@ class CounterController extends Controller
                 $em->flush();
                 $this->addFlash('success', 'Counter created');
             } else {
-                dump($formErrors->getErrors($form));
+                // dump($formErrors->getErrors($form));
             }
         }
 
