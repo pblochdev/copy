@@ -45,12 +45,8 @@ class NoteController extends Controller
         $form->handleRequest($request);
         $user = $this->getUser();
         $notes = [];
-        dump($request->request->all());
-        // exit;
         
         if ($form->isSubmitted() && $form->isValid()) {
-            dump('isValud');
-            exit;
             $note = $form->getData();
             $note->setUser($this->getUser());
             $em = $this->getDoctrine()->getManager();
@@ -96,7 +92,6 @@ class NoteController extends Controller
                 $em->flush();
                 $this->addFlash('success', 'Task created!');
             } else {
-                dump($formErrors->getErrors($form));
             }   
         }
 

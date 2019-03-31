@@ -45,15 +45,4 @@ class ExcerciseType extends AbstractType
             'csrf_protection' => false,
         ]);
     }
-
-
-    public function getJsonErrors()
-    {
-        $errors = $this->getErrors(true, false);
-
-        if (!empty($errors)) {
-            dump($errors);
-        }
-        exit;
-    }
 }
