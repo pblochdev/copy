@@ -14,12 +14,10 @@ class WorkoutList extends React.Component {
 		.then(res => res.json())
 		.then(
 		  (result) => {
-			console.log('result', result);
-			
-			this.setState({
-			  isLoaded: true,
-			  items: result
-			});
+				this.setState({
+					isLoaded: true,
+					items: result
+				});
 		  },
 		  // Note: it's important to handle errors here
 		  // instead of a catch() block so that we don't swallow
@@ -37,7 +35,6 @@ class WorkoutList extends React.Component {
 	delete = (url) => {
 		axios.get(url)
 			.then(res => {
-				console.log(res.data);
 				this.fetchResult();
 			})
 			.catch(err => console.log(err))
@@ -53,16 +50,16 @@ class WorkoutList extends React.Component {
 
 		return (
 			<div>
-				{items.map(item => (
-				  <div className="workout row">
-					<div className="col-7 col-md-9">
-					  <a href={item.details_url}>{item.date}</a>
-					</div>
-					<div className="col-5 col-md-3">
-						<button onClick={() => this.delete(item.remove_url)} className="btn btn-danger">Remove</button>
-					</div>
+				{items.map((item, index) => 
+				  <div className="workout row" key={index} >
+						<div className="col-7 col-md-9">
+							<a href={item.details_url}>{item.date}</a>
+						</div>
+						<div className="col-5 col-md-3">
+							<button onClick={() => this.delete(item.remove_url)} className="btn btn-danger">Remove</button>
+						</div>
 				  </div>
-				))}
+				)}
 			</div>
 		);
 	  }
