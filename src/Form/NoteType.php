@@ -24,7 +24,7 @@ class NoteType extends AbstractType
             ->add('save', SubmitType::class, array(
                 'label' => 'Add Note',
                 'attr' => [
-                    'class' => 'btn btn-primary',
+                    'class' => 'btn btn-default',
                 ]
             ));
     }

@@ -56,6 +56,8 @@ class WorkoutController extends Controller
         $workouts = $repository->findBy([
             'user' => $this->getUser(),
             'status' => 1
+        ], [
+            'id' => 'DESC'
         ]);
 
         return $this->render('workout/list.html.twig', [
@@ -72,6 +74,8 @@ class WorkoutController extends Controller
         $workouts = $repository->findBy([
             'user' => $this->getUser(),
             'status' => 1
+        ], [
+            'id' => 'DESC'
         ]);
             
         

@@ -63,8 +63,10 @@ class WorkoutRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder("e");
         $qb
             ->andWhere('e.date BETWEEN :from AND :to')
+            ->andWhere('e.status IN (:status)')
             ->setParameter('from', $from )
             ->setParameter('to', $to)
+            ->setParameter('status', 1)
         ;
         $result = $qb->getQuery()->getResult();
 

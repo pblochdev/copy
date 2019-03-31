@@ -50,7 +50,7 @@ class WorkoutDetails extends React.Component {
 			return <div>Loading...</div>;
 	  } else {
 			return (
-			<div>
+			<div class="col-12">
 				{items.map(item => (
 					<div className="excercise row">
 						<div className="col-12 col-md-6 font-weight-bold">

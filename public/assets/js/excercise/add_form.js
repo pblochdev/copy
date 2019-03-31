@@ -42,7 +42,7 @@ class AddExcerciseForm extends React.Component {
 					'name': 'excercise[submit]',
 					'outerClass': 'col-4 col-md-2 form-element',
 					'attrs': {
-						'className': 'btn-secondary btn'
+						'className': 'btn-default btn'
 					}
 				},
 			]

@@ -1,6 +1,7 @@
 
 body {
-	background-color: #dedede;
+	background-color: #1D2228;
+	color: #E1E2E2;
 }
 
 .row {
@@ -13,14 +14,71 @@ body {
 	align-items: center;
 }
 
+a {
+	color: #FB8122;
+}
+
+.btn-danger,
+.btn-default {
+	background-color: #FB8122; 
+	border-color: #FB8122;
+	color: #E1E2E2;
+}
+
+
+.navbar-collapse li {
+	border-bottom: 1px solid #FB8122;
+}
+
+.navbar-light .navbar-nav .nav-link,
+.navbar-light .navbar-brand {
+	color: #E1E2E2;
+}
+
+.navbar-light .navbar-toggler {
+	color: #E1E2E2;
+	padding: 0;
+	font-size: 30px;
+}
+
+.excercise.row,
+.workout.row {
+	border-bottom: 1px solid #FB8122;
+	padding: 7px 0px;
+} 
+
+.excercise.row .btn,
+.workout.row .btn {
+	padding: 2px;
+}
+
+a.nav-add-workout:hover,
+a.nav-add-workout:active,
+a.nav-add-workout {
+	display: flex;
+	align-items: center;
+	text-decoration: none;
+}
+
+.nav-add-workout i.fas {
+	font-size: 20px;
+	margin-right: 5px;
+}
+
 @media (min-width: 768px) {
+	nav.navbar {
+		background-color: #FB8122;
+		color: #1D2228;
+		display: -webkit-box;
+	}
+
 	nav .navbar-nav {
 		flex-direction: row;
-		justify-content: space-between;
+		justify-content: flex-end;
 	}
 
 	nav .collapse {
-		display: block;
+		display: inline;
 		flex-basis: auto;
 	}
 		
@@ -30,6 +88,21 @@ body {
 
 	nav .navbar-light .navbar-nav .nav-link {
 		color: rgba(0,0,0,.8); 
+	}
+
+	.navbar-collapse li {
+		margin: 0 20px;
+	}
+
+	.navbar-light .navbar-nav .nav-link,
+	.navbar-light .navbar-brand {
+		color: #1D2228;
+	}
+
+	a.nav-add-workout:hover, 
+	a.nav-add-workout:active, 
+	a.nav-add-workout {
+		color: #1D2228;
 	}
 }
 
