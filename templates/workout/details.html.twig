@@ -12,7 +12,7 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/babel" src="{{ asset('../assets/js/workout/details.js') }}"></script>
-    <script type="text/babel" src="{{ asset('../assets/js/component/input.js') }}"></script>
+    
     <script type="text/babel" src="{{ asset('../assets/js/excercise/add_form.js') }}"></script>
     <script type="text/babel">
         let excercie_list = ReactDOM.render(<WorkoutDetails workout_id="{{ workout.id }}" />, document.getElementById('workout_details'));

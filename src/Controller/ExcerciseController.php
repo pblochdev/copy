@@ -82,7 +82,7 @@ class ExcerciseController extends Controller
         } else {
             $response = new JsonResponse([
                 'result' => 'invalid',
-                'errors' => $formErrors->getJson($form)
+                'errors' => $formErrors->getErrors($form)
             ]);
         }
 

@@ -9,7 +9,7 @@ body {
 
 }
 
-.row > div {
+div.row > div {
 	display: flex;
 	align-items: center;
 }
@@ -63,6 +63,17 @@ a.nav-add-workout {
 .nav-add-workout i.fas {
 	font-size: 20px;
 	margin-right: 5px;
+}
+
+.shake {
+	animation: shake 0.25s; 
+}
+
+@keyframes shake {
+	0% { transform: translateY(0px, 0px); }
+	25% { transform: translate(0px, -3px); }
+	75% { transform: translate(0px, 3px); }
+	100% { transform: translate(0px, 0px); }
 }
 
 @media (min-width: 768px) {

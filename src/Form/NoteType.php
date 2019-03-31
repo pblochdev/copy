@@ -16,9 +16,11 @@ class NoteType extends AbstractType
     {
         $builder
             ->add('text', TextareaType::class, [
+                'required' => true,
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Nowa notatka'
+                    'placeholder' => 'Nowa notatka',
+                    
                 ]
             ])
             ->add('save', SubmitType::class, array(

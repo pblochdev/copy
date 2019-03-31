@@ -14,8 +14,6 @@ class WorkoutDetails extends React.Component {
 		.then(res => res.json())
 		.then(
 		  (result) => {
-				console.log('result', result);
-				
 				this.setState({
 					isLoaded: true,
 					items: result
@@ -36,7 +34,6 @@ class WorkoutDetails extends React.Component {
 	delete = (url) => {
 		axios.get(url)
 			.then(res => {
-				console.log(res.data);
 				this.fetchResult();
 			})
 			.catch(err => console.log(err))
@@ -50,9 +47,9 @@ class WorkoutDetails extends React.Component {
 			return <div>Loading...</div>;
 	  } else {
 			return (
-			<div class="col-12">
-				{items.map(item => (
-					<div className="excercise row">
+			<div className="col-12">
+				{items.map((item, index) => 
+					<div key={index} className="excercise row">
 						<div className="col-12 col-md-6 font-weight-bold">
 							{item.name}
 						</div>
@@ -65,15 +62,13 @@ class WorkoutDetails extends React.Component {
 						<div className="col-4 col-md-2">
 							<button onClick={() => this.delete(item.remove_url)} className="btn btn-danger">Remove</button>
 						</div>
-						</div>
-					))}
+					</div>
+					)}
 			</div>)
 		}
 	}
   
 	componentDidMount() {
-		console.log(this.props.workout_id);
-		
 	  this.fetchResult()
 	  // setInterval(this.fetchResult, 60000);
 	}

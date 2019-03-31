@@ -7,6 +7,7 @@ use App\Form\NoteType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use App\Services\FormErrors;
 
 class NoteController extends Controller
 {
@@ -44,8 +45,12 @@ class NoteController extends Controller
         $form->handleRequest($request);
         $user = $this->getUser();
         $notes = [];
-
+        dump($request->request->all());
+        // exit;
+        
         if ($form->isSubmitted() && $form->isValid()) {
+            dump('isValud');
+            exit;
             $note = $form->getData();
             $note->setUser($this->getUser());
             $em = $this->getDoctrine()->getManager();
@@ -74,7 +79,7 @@ class NoteController extends Controller
     /**
      * @Route("/list-done", name="list_done")
      */
-    public function listDone(Request $request)
+    public function listDone(Request $request, FormErrors $formErrors)
     {
         $note = new Note;
         $form = $this->createForm(NoteType::class, $note);
@@ -82,13 +87,17 @@ class NoteController extends Controller
         $user = $this->getUser();
         $notes = [];
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $note = $form->getData();
-            $note->setUser($this->getUser());
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($note);
-            $em->flush();
-            $this->addFlash('success', 'Task created!');
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $note = $form->getData();
+                $note->setUser($this->getUser());
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($note);
+                $em->flush();
+                $this->addFlash('success', 'Task created!');
+            } else {
+                dump($formErrors->getErrors($form));
+            }   
         }
 
         $repository = $this->getDoctrine()->getRepository(Note::class);

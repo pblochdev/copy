@@ -15,12 +15,14 @@ class CounterType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
+                'required' => true,
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'Counter name'
                 ]
             ])
             ->add('start_counter', TextType::class, [
+                'required' => true,
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'Counter'

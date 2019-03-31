@@ -9,25 +9,30 @@ use App\Entity\CounterHistory;
 use App\Form\CounterHistoryType;
 use App\Form\CounterType;
 use Symfony\Component\HttpFoundation\Request;
+use App\Services\FormErrors;
 
 class CounterController extends Controller
 {
     /**
      * @Route("/add-counter", name="add_counter")
      */
-    public function addCounter(Request $request)
+    public function addCounter(Request $request, FormErrors $formErrors)
     {
         $counter = new Counter;
         $form = $this->createForm(CounterType::class, $counter);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $counter = $form->getData();
-            $counter->setUserId($this->getUser());
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($counter);
-            $em->flush();
-            $this->addFlash('success', 'Counter created');
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $counter = $form->getData();
+                $counter->setUserId($this->getUser());
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($counter);
+                $em->flush();
+                $this->addFlash('success', 'Counter created');
+            } else {
+                dump($formErrors->getErrors($form));
+            }
         }
 
         return $this->render('counter/add-counter.html.twig', array(

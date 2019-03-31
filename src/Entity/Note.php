@@ -6,6 +6,7 @@ use App\Repository\NoteRepository;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\NoteRepository")
@@ -21,6 +22,7 @@ class Note
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotNull
      */
     private $text = "";
 

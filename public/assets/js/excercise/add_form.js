@@ -5,6 +5,7 @@ class AddExcerciseForm extends React.Component {
 		
 		this.state = {
 			formSubmitted: false,
+			errors: {},
 			elements: [
 				{
 					'type': 'text',
@@ -49,7 +50,6 @@ class AddExcerciseForm extends React.Component {
 		}
 	}
 
-
 	handleSubmit(event) {
     	const formData = new FormData(event.target)
 		const formValues = new URLSearchParams();
@@ -65,7 +65,6 @@ class AddExcerciseForm extends React.Component {
 		axios.post('/add-excercise', formValues)
 		.then(
 			(response) => {
-				console.log('response', response);
 				if (response.data.result == 'success') {
 					this.props.excercise_list.fetchResult();
 					this.state.formSubmitted = true;
@@ -73,31 +72,30 @@ class AddExcerciseForm extends React.Component {
 					this.state.formSubmitted = false;
 					this.forceUpdate();
 				} else if (response.data.result == 'invalid') {
-					
-					
+					this.setState(state => ({
+						errors: response.data.errors
+					}))
 				}
 			},
 			(error) => {
-				console.log('error', error);
 				
 			}
 		);
 		
 	}
 
-
 	render() {
 		if (this.state.formSubmitted === false) {
 			return (
 				<form className="row" onSubmit={this.handleSubmit}>
 					{this.state.elements.map(item => (
-						<Input type={item.type} outerClass={item.outerClass} id={item.id} name={item.name} attrs={item.attrs}/>
+						<Input type={item.type} outerClass={item.outerClass} key={item.id} id={item.id} name={item.name} attrs={item.attrs} errors={this.state.errors[item.name]}/>
 					))}
 				</form>
 			)
 		} else {
 			return (
-				<div>TEST</div>
+				<div></div>
 			)
 		}
 	}
