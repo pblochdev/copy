@@ -80,7 +80,7 @@ a.nav-add-workout {
 	nav.navbar {
 		background-color: #FB8122;
 		color: #1D2228;
-		display: -webkit-box;
+		display: flex;
 	}
 
 	nav .navbar-nav {
@@ -91,6 +91,7 @@ a.nav-add-workout {
 	nav .collapse {
 		display: inline;
 		flex-basis: auto;
+		flex-grow: 0;
 	}
 		
 	nav .navbar-toggler {
