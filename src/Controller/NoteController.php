@@ -8,67 +8,42 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Services\FormErrors;
+use App\Formater\NoteList;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class NoteController extends Controller
 {
     /**
-     * @Route("/note", name="add_note")
+     * @Route("/notes-list", name="notes_list")
      */
-    public function index(Request $request)
+    public function list(NoteList $noteListFormater)
     {
-        $note = new Note;
-        $form = $this->createForm(NoteType::class, $note);
-        $form->handleRequest($request);
+        $user = $this->getUser();
+        $repository = $this->getDoctrine()->getRepository(Note::class);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $note = $form->getData();
-            $note->setUser($this->getUser());
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($note);
-            $em->flush();
-            $this->addFlash('success', 'Task created!');
-        }
+        $notes = $repository->findBy([
+            'user' => $this->getUser()->getId(),
+            'status' => 1
+        ], [
+            'id' => 'DESC'
+        ]);
+        
+        $notes = array_map(function($item) {
+            return $item->toArray();
+        }, $notes);
 
-        return $this->render('note/index.html.twig', array(
-            'form' => $form->createView()
-        ));
+        $notes = $noteListFormater->format($notes);
+        
+        return new JsonResponse($notes);
     }
 
 
     /**
      * @Route("/", name="list")
      */
-    public function list(Request $request)
+    public function index(Request $request)
     {
-        $note = new Note;
-        $form = $this->createForm(NoteType::class, $note);
-        $form->handleRequest($request);
-        $user = $this->getUser();
-        $notes = [];
-        
-        if ($form->isSubmitted() && $form->isValid()) {
-            $note = $form->getData();
-            $note->setUser($this->getUser());
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($note);
-            $em->flush();
-            $this->addFlash('success', 'Task created!');
-        }
-
-        $repository = $this->getDoctrine()->getRepository(Note::class);
-        if ($user) {
-            $notes = $repository->findBy([
-                'user' => $this->getUser()->getId(),
-                'status' => 1
-            ], [
-                'id' => 'DESC'
-            ]);
-        }
-
-        return $this->render('note/list.html.twig', array(
-            'notes' => $notes,
-            'form' => $form->createView()
-        ));
+        return $this->render('note/list.html.twig');
     }
 
 
@@ -111,6 +86,36 @@ class NoteController extends Controller
         ));
     }
 
+    /**
+     * @Route("add-note", name="add_note")
+     */
+    public function addNote(Request $request, FormErrors $formErrors)
+    {
+        $form = $this->createForm(NoteType::class);
+        $form->handleRequest($request);
+        $response = [];
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $note = $form->getData();
+                $note->setUser($this->getUser());
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($note);
+                $em->flush();
+                $response = [
+                    'result' => 'success'
+                ];
+            } else {
+                $response = [
+                    'result' => 'invalid',
+                    'errors' => $formErrors->getErrors($form)
+                ];
+            }
+        }
+
+        return new JsonResponse($response);
+    }
+
 
     /**
      * @Route("note-remove/{noteId}", name="note_remove")
@@ -132,7 +137,9 @@ class NoteController extends Controller
         $note->setStatus(0);
         $entityManager->flush();
 
-        return $this->redirectToRoute('list');
+        return new JsonResponse([
+            'result' => 'success'
+        ]);
     }
 
 
@@ -157,6 +164,8 @@ class NoteController extends Controller
         $note->setDoneAt(new \DateTime());
         $entityManager->flush();
 
-        return $this->redirectToRoute('list');
+        return new JsonResponse([
+            'result' => 'success'
+        ]);
     }
 }

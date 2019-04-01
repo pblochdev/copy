@@ -1,33 +1,41 @@
 class Form extends React.Component {
 	constructor(props) {
 		super(props);
+		this.handleSubmit = this.handleSubmit.bind(this);
+		
 		this.state = {
-			error: null,
-			isLoaded: false,
-			elements: JSON.parse(this.props['elements'])
-		};
-
+			formSubmitted: false,
+			errors: {},
+			elements: this.getElements()
+		}
 	}
 
+	getFormValues(form) {
+		const formData = new FormData(form)
+		const formValues = new URLSearchParams();
+
+		event.preventDefault()
+		
+		for (let entry of formData.entries()) {
+			formValues.append(entry[0], entry[1]);
+		}
+
+		return formValues
+	}
 
 	render() {
-		
-		return (
-			<div className="row">
-				<Input type="text" id="excercise_name" name="excercise[name]" required="required" placeholder="Name" class="form-control"/>
-				<div className="col-12 col-md-6">
-					<input type="text" id="excercise_name" name="excercise[name]" required="required" placeholder="Name" class="form-control"/>
-				</div>
-				<div className="col-4 col-md-2">
-					<input type="text" id="excercise_repetition" name="excercise[repetition]" required="required" placeholder="Repetition" className="form-control"/>
-				</div>
-				<div className="col-4 col-md-2">
-					<input type="text" id="excercise_weight" name="excercise[weight]" required="required" placeholder="Weight" className="form-control"/>
-				</div>  
-				<div className="col-4 col-md-2">
-					<button type="submit" id="excercise_submit" name="excercise[submit]" className="btn-secondary btn">Submit</button>
-				</div>
-			</div>
-		)
+		if (this.state.formSubmitted === false) {
+			return (
+				<form className="row" onSubmit={this.handleSubmit}>
+					{this.state.elements.map(item => (
+						<Input type={item.type} outerClass={item.outerClass} key={item.id} id={item.id} name={item.name} attrs={item.attrs} errors={this.state.errors[item.name]}/>
+					))}
+				</form>
+			)
+		} else {
+			return (
+				<div></div>
+			)
+		}
 	}
 }

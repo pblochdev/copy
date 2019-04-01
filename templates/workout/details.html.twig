@@ -15,8 +15,8 @@
     
     <script type="text/babel" src="{{ asset('../assets/js/excercise/add_form.js') }}"></script>
     <script type="text/babel">
-        let excercie_list = ReactDOM.render(<WorkoutDetails workout_id="{{ workout.id }}" />, document.getElementById('workout_details'));
-        ReactDOM.render(<AddExcerciseForm excercise_list={excercie_list} workout_id="{{ workout.id }}" />, document.getElementById('excercise_form'));
+        let excercieList = ReactDOM.render(<WorkoutDetails workout_id="{{ workout.id }}" />, document.getElementById('workout_details'));
+        {# ReactDOM.render(<AddExcerciseForm excercise_list={excercieList} workout_id="{{ workout.id }}" />, document.getElementById('excercise_form')); #}
     </script>
     
 {% endblock %}

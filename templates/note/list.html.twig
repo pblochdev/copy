@@ -1,26 +1,18 @@
 {% extends "base.html.twig" %}
 {% block body %}
-    <div class="col-12">
-        
-        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-        {{ form_widget(form) }}
-        {{ form_end(form) }}
-        <h1>Notes list</h1>
-        {% for note in notes %}
-            <div class="row mb-2">
-                <div class="col-12 col-md-8">
-                    <input class="w-100 form-control" type="text" name="" id="" value="{{ note.text }}">
-                </div>
-                <div class="col-6 col-md-2">
-                    {{ note.createdAt|date("H:i m-d-Y") }}
-                </div>
-                <div class="col-3 col-md-1">
-                    <a href="{{ path('note_remove', { 'noteId': note.id }) }}">Remove</a>
-                </div>
-                <div class="col-3 col-md-1">
-                    <a href="{{ path('note_done', { 'noteId': note.id }) }}">Done</a>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
+    <div id="note_form" class="col-12"></div>
+    <h1>Notes list</h1>
+    <div id="note_list"></div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/babel" src="{{ asset('../assets/js/note/add_form.js') }}"></script>
+    <script type="text/babel" src="{{ asset('../assets/js/note/list.js') }}"></script>
+    <script type="text/babel">
+        let noteList = ReactDOM.render(<NoteList />, document.getElementById('note_list'));
+        ReactDOM.render(<NoteAddForm note_list={noteList} />, document.getElementById('note_form'));
+    </script>
 {% endblock %}

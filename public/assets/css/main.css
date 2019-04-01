@@ -19,10 +19,14 @@ a {
 }
 
 .btn-danger,
+.btn-danger:hover,
+.btn-danger:active,
+.btn-default:hover,
+.btn-default:active,
 .btn-default {
-	background-color: #FB8122; 
+	background-color: unset; 
 	border-color: #FB8122;
-	color: #E1E2E2;
+	color: #FB8122;
 }
 
 
@@ -67,6 +71,11 @@ a.nav-add-workout {
 
 .shake {
 	animation: shake 0.25s; 
+}
+
+.btn-group-col {
+	display: flex;
+	justify-content: space-around;
 }
 
 @keyframes shake {

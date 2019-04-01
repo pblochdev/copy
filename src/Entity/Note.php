@@ -62,7 +62,7 @@ class Note
         return $this->text;
     }
 
-    public function setText(string $text): self
+    public function setText(?string $text): self
     {
         $this->text = $text;
 
@@ -115,5 +115,15 @@ class Note
         $this->done_at = $done_at;
 
         return $this;
+    }
+
+    public function toArray()
+    {
+        return [
+            'id' => $this->id,
+            'text' => $this->text,
+            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+            'done_at' => !empty($this->done_at) ? $this->done_at->format('Y-m-d H:i:s') : null
+        ];
     }
 }

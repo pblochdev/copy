@@ -2,30 +2,14 @@
 
 namespace App\Formater;
 
-use Symfony\Component\Routing\RouterInterface;
-
-class ExcerciseList
+class ExcerciseList extends FormaterAbstract
 {
-	protected $router;
-
-	public function __construct(RouterInterface $router)
-	{
-		$this->router = $router;
-	}
-
 	public function format($data)
 	{
 		foreach ($data as &$item) {
-			$item['remove_url'] = $this->getUrl('excercise_remove', $item['id']);
+			$item['remove_url'] = $this->getUrl('excercise_remove', $item['id'], 'excerciseId');
 		}
 
 		return $data;
-	}
-
-	protected function getUrl($urlName, $itemId)
-	{
-		return $this->router->generate($urlName, [
-			'excerciseId' => $itemId
-		]);
 	}
 }
