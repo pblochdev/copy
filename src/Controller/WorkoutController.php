@@ -13,6 +13,7 @@ use App\Formater\WorkoutList;
 use App\Services\FormErrors;
 use App\Services\FormJson;
 use App\Services\Workout as AppWorkout;
+use App\Formater\Calendar;
 
 class WorkoutController extends Controller
 {
@@ -135,6 +136,31 @@ class WorkoutController extends Controller
             'result' => 'success'
         ]);
         
+        return $response;
+    }
+
+
+    /**
+     * @Route("/workout-events", name="workout_events")
+     */
+    public function calendarEvents(Request $request, Calendar $formatter)
+    {
+        $repository = $this->getDoctrine()->getRepository(Workout::class);
+        $workouts = $repository->findBy([
+            'user' => $this->getUser(),
+            'status' => 1
+        ], [
+            'id' => 'DESC'
+        ]);
+            
+        
+        $workouts = array_map(function($object) {
+            return $object->toArray();
+        }, $workouts);
+
+        $workouts = $formatter->getEvents($workouts);
+
+        $response = new JsonResponse($workouts);
         return $response;
     }
 

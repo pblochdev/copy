@@ -21,6 +21,10 @@ security:
                 default_target_path: /
             logout:
                 path: app_logout
+            remember_me:
+                secret:   '%kernel.secret%'
+                lifetime: 31622400 # 1 year in seconds
+                path:     /
 
             # activate different ways to authenticate
 
