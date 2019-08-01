@@ -72,4 +72,18 @@ class WorkoutRepository extends ServiceEntityRepository
 
         return reset($result);
     }
+
+
+    public function getTimeline($userId)
+    {
+        $query = $this->createQueryBuilder('w')
+            ->innerJoin('w.user', 'u')
+            ->orderBy('w.created_at', 'DESC')
+            ->where('u.id not in (:user_id)')
+                ->setParameter('user_id', $userId)
+            ->getQuery()
+            ->getResult();
+
+        return $query;
+    }
 }

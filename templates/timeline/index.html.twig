@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% for workout in workouts %}
+        <div class="card">
+            <h5 class="card-header">{{ workout.user.username }}</h5>
+            <div class="card-body">
+                <h5 class="card-title">{{ workout.createdat|date('Y-m-d H:i:s') }}</h5>
+                <a href="{{ path('workout_details', { 'workoutId' : workout.id }) }}" class="btn btn-primary">Check details</a>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

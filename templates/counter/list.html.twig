@@ -11,7 +11,7 @@
                     {{ counter.counterHistories|length }} / {{ counter.startCounter }}
                 </div>
                 <div class="col-6 col-md-2">
-                    <a class="btn btn-primary"href="{{ path('add_counter_history', { 'counterId' : counter.id }) }}">+</a>
+                    <a class="btn btn-primary" href="{{ path('add_counter_history', { 'counterId' : counter.id }) }}">+</a>
                 </div>
                 <div class="col-6 col-md-2">
                     {{ counter.createdAt|date("H:i m-d-Y") }}
